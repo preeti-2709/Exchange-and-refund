@@ -617,11 +617,11 @@ if (! class_exists('Ced_refund_and_exchange_order_meta')) {
 				$amount1 = $refund_cancel['amount']; //Total Amount - 10 + Shipping Amount 10
 				//echo "<br>";
 				//$amount1 = 2;
-				$amount = number_format($amount1, 1, '.', '');
+				$amount = number_format($amount1, 1);
 				$refund_amount1 = $refund_cancel['refund_amount'] + $refund_item_shipping; //
 				//$refund_amount1 = 1;
 				//echo "<br>";
-				$refund_amount = number_format($refund_amount1, 1, '.', '');
+				$refund_amount = number_format($refund_amount1, 1);
 				$email = $refund_cancel['email'];
 				$phone = $refund_cancel['phone'];
 				// $country_code = '+91';
@@ -706,29 +706,15 @@ if (! class_exists('Ced_refund_and_exchange_order_meta')) {
 			} else {
 				$refund_cancel['status'] = 'partial-cancel';
 			}
-			//$refund_cancel['txid'] = get_post_meta( $order_id,'transaction_id',true);
+
+
+
+			$refund_cancel['txid'] = get_post_meta($order_id, 'transaction_id', true);
 
 			$the_order = wc_get_order($_POST['order_id']);
 			$items = $the_order->get_items();
 			$total_qty_order = $the_order->get_item_count();
-			$refund_amount_total = '';
-			$sumVA = 0;
-			//My Code
-			foreach ($items as $item_id1 => $item1) {
-				//$lineid = $item1->get_id();
-
-				foreach ($item_ids as $item_detail1) {
-
-					if ($item_id1 == $item_detail1[0]) {
-						$product_variation_subtotal = $item1['subtotal'];
-						$product_variation_total = $item1['total'];
-						$product_quantity = $item1['quantity'];
-						$product_variation_finaltotal = $product_variation_subtotal - $product_variation_total;
-						$finaldiscount = $product_variation_finaltotal / $product_quantity;
-						$sumVA = $sumVA + $finaldiscount;
-					}
-				}
-			}
+			$refund_amount_total = 0;
 			foreach ($items as $item_id => $item) {
 				//   $total_item_qty = count($items);
 				foreach ($item_ids as $item_detail) {
@@ -740,11 +726,17 @@ if (! class_exists('Ced_refund_and_exchange_order_meta')) {
 						} else {
 							$product = wc_get_product($product_id);
 						}
-						$refund_amount_total = $refund_amount_total + wc_get_price_to_display($product);
+						// $refund_amount_total = $refund_amount_total + wc_get_price_to_display( $product );
+						if (is_a($product, 'WC_Product')) {
+							$refund_amount_total += wc_get_price_to_display($product);
+						} else {
+							error_log('Invalid product object for item ID: ' . $item_id);
+						}
 						$refundtotal_item_qty = count($item_ids);
 					}
 				}
 			}
+
 			$customer_id = ($value = get_post_meta($order_id, '_customer_user', true)) ? absint($value) : '';
 			$total_amount = $the_order->get_total();
 			$shipping_amount = $the_order->get_shipping_total();
@@ -752,18 +744,16 @@ if (! class_exists('Ced_refund_and_exchange_order_meta')) {
 			$phone = $the_order->get_billing_phone();
 			$refund_cancel['total_item_qty1'] =  $total_qty_order;
 			$refund_cancel['item_qty1'] = $refundtotal_item_qty;
-			$quanity_shpping_price = $refund_cancel['item_qty1'] * 99;
-			$refund_cancel['txid'] = $the_order->get_transaction_id();
 			$refund_cancel['amount'] = $total_amount;
 			$refund_cancel['refund_shippingamount'] = $shipping_amount;
-			$refund_cancel['refund_discount'] = $sumVA;
-			$refund_cancel['refund_amount'] = $refund_amount_total - $refund_cancel['refund_discount'];
-			$total_finalamount = $refund_cancel['refund_amount'] + $quanity_shpping_price;
+			$refund_cancel['refund_amount'] = $refund_amount_total;
 			$refund_cancel['phone'] = $phone;
 			$refund_cancel['email'] = $email;
 			$refund_cancel['customer_id'] = $customer_id;
 
 			//print_r($refund_cancel);
+
+
 
 			$Refund_Request = $this->Refund_Request_Api($refund_cancel);
 
@@ -781,6 +771,7 @@ if (! class_exists('Ced_refund_and_exchange_order_meta')) {
 					echo $url;
 					wp_die();
 				}
+
 				// <h4 style="text-align:center">Order #' . $order_id . '</h4>
 				$message = '';
 				$message .= '<div style="font-family:Arial,Helvetica Neue,Helvetica,sans-serif;text-align:center" align="center">
@@ -792,12 +783,23 @@ if (! class_exists('Ced_refund_and_exchange_order_meta')) {
 											<th style="border: 1px solid #d2cfcf; border-collapse: collapse; color:#222222; font-style:normal; font-weight: normal; background-color:#ffffff; text-decoration:normal; text-align:left; font-size:12px;padding-top:10px;padding-bottom:10px;padding-left:10px;">' . __('Price', 'woocommerce-refund-and-exchange') . '</th>
 										</tr>';
 				$total_amount = 0;
+
 				//changes - 02-010-22
 				$cancel_datas = get_post_meta($order_id, 'partial_cancel_details', true);
-				$count = count($cancel_datas['partial_cancel_product']);
+				if (empty($cancel_datas) || ! is_array($cancel_datas)) {
+					error_log('No partial_cancel_details metadata found for order ID: ' . $order_id);
+					$cancel_datas = []; // Initialize as an empty array to prevent further errors
+				}
+
+
+				// Count the partial_cancel_product entries
+				$count = isset($cancel_datas['partial_cancel_product']) ? count($cancel_datas['partial_cancel_product']) : 0;
 				$count_final = $count;
-				$i = 0;
-				$insert_data['partial_cancel_product'] = array();
+
+				// Initialize insert data
+				$insert_data['partial_cancel_product'] = [];
+
+
 				foreach ($items as $item_id => $item) {
 					foreach ($item_ids as $item_detail) {
 						if ($item_id == $item_detail[0]) {
@@ -927,6 +929,10 @@ if (! class_exists('Ced_refund_and_exchange_order_meta')) {
 						}
 					}
 				}
+				// echo "<pre>";
+				// print_r($insert_data);
+				// echo "</pre>";
+				// die();
 				// echo "<br>";
 				// print_r($insert_data);
 				// die;
@@ -935,15 +941,7 @@ if (! class_exists('Ced_refund_and_exchange_order_meta')) {
 				} else if (!empty($cancel_datas)) {
 					update_post_meta($order_id, 'partial_cancel_details', $cancel_datas);
 				}
-				$message .= '<br><tr>
-				                <td colspan="2" style="border: 1px solid #d2cfcf; border-collapse: collapse; color:#222222; font-style:normal; font-weight: normal; background-color:#ffffff; text-decoration:normal; text-align:left; font-size:12px;padding-top:10px;padding-bottom:10px;padding-left:10px;"><b>Total Shipping Amount</b></td>
-								<td style="border: 1px solid #d2cfcf; border-collapse: collapse; color:#222222; font-style:normal; font-weight: normal; background-color:#ffffff; text-decoration:normal; text-align:left; font-size:12px;padding-top:10px;padding-bottom:10px;padding-left:10px;"><span class="woocommerce-Price-currencySymbol">₹</span>' . 	$quanity_shpping_price . '</td>
-							</tr>
-							<tr>
-				                <td colspan="2" style="border: 1px solid #d2cfcf; border-collapse: collapse; color:#222222; font-style:normal; font-weight: normal; background-color:#ffffff; text-decoration:normal; text-align:left; font-size:12px;padding-top:10px;padding-bottom:10px;padding-left:10px;"><b>Total Refund Amount</b></td>
-								<td style="border: 1px solid #d2cfcf; border-collapse: collapse; color:#222222; font-style:normal; font-weight: normal; background-color:#ffffff; text-decoration:normal; text-align:left; font-size:12px;padding-top:10px;padding-bottom:10px;padding-left:10px;"><span class="woocommerce-Price-currencySymbol">₹</span>' . $total_finalamount . '</td>
-							</tr>
-							</tbody></table><p>Once your order has been cancelled, the refund amount will be credited back to the source account within 5-7 working days.</p></div>';
+				$message .= '</tbody></table></div>';
 				$the_order->calculate_totals();
 				$wallet_flag = true;
 				if ('processing' === $the_order->get_status() && 'cod' === $the_order->get_payment_method()) {
@@ -1002,7 +1000,7 @@ if (! class_exists('Ced_refund_and_exchange_order_meta')) {
 						$curl2 = curl_init();
 
 						curl_setopt_array($curl2, array(
-							CURLOPT_URL => 'https://apiv2.shiprocket.in/v1/external/orders',
+							CURLOPT_URL => 'https://apiv2.shiprocket.in/v1/external/orders?per_page=100',
 							CURLOPT_RETURNTRANSFER => true,
 							CURLOPT_ENCODING => '',
 							CURLOPT_MAXREDIRS => 10,
@@ -1019,17 +1017,18 @@ if (! class_exists('Ced_refund_and_exchange_order_meta')) {
 						$response2 = curl_exec($curl2);
 						$response_array2 = json_decode($response2, true);
 						//print_r($response_array2);
+						if ($response_array2 != '') {
+							// Iterate through the array to find the entry with the matching channel_order_id
+							foreach ($response_array2['data'] as $entry) {
+								//print_r($response_array);
+								if ($entry['channel_order_id'] == $order_id) { // Replace "634666" with the desired channel_order_id
+									$id = $entry['id']; // Retrieve the id associated with the matching channel_order_id
 
-						// Iterate through the array to find the entry with the matching channel_order_id
-						foreach ($response_array2['data'] as $entry) {
-							//print_r($response_array);
-							if ($entry['channel_order_id'] == $order_id) { // Replace "634666" with the desired channel_order_id
-								$id = $entry['id']; // Retrieve the id associated with the matching channel_order_id
-
-								// Call the function to cancel the order
-								//$cancel_response = cancelShiprocketOrder($id, $token);
-								//return $cancel_response;
-								//break; // Exit the loop once the match is found
+									// Call the function to cancel the order
+									//$cancel_response = cancelShiprocketOrder($id, $token);
+									//return $cancel_response;
+									//break; // Exit the loop once the match is found
+								}
 							}
 						}
 
@@ -1060,11 +1059,13 @@ if (! class_exists('Ced_refund_and_exchange_order_meta')) {
 					curl_close($curl1);
 					//ShipRocket Cancel API End
 					// $the_order->update_status( 'wc-cancelled', __( 'The user has cancelled some products of order.', 'woocommerce-refund-and-exchange' ) );
-
 					$the_order->update_status('cancelled', __('Order cancelled by customer.', 'woocommerce'));
 				} else {
 					$the_order->update_status('wc-partial-cancel', __('The user has cancelled some products of order.', 'woocommerce-refund-and-exchange'));
 				}
+
+
+
 
 				$mail_header = stripslashes(get_option('ced_rnx_notification_mail_header', false));
 				$mail_header = apply_filters('mwb_rnx_meta_content', $mail_header);
@@ -1177,7 +1178,7 @@ if (! class_exists('Ced_refund_and_exchange_order_meta')) {
                                                                               <tr>
                                                                                 <td class="pad" style="width:100%;padding-right:0;padding-left:0">
                                                                                   <div class="alignment" align="center" style="line-height:10px">
-                                                                                    <img alt="" width="100" src="https://shop.studds.com/wp-content/uploads/2023/01/STUDDS-White-250-X-250-LOGO.png" max-width="100%" style="border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; background-color: transparent; max-width: 100%; vertical-align: middle; width: 100px;" border="0" bgcolor="transparent">
+                                                                                    <img alt="" width="100" src="http://studdsonlinestore.com/wp-content/uploads/2023/01/STUDDS-White-250-X-250-LOGO.png" max-width="100%" style="border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; background-color: transparent; max-width: 100%; vertical-align: middle; width: 100px;" border="0" bgcolor="transparent">
                                                                                   </div>
                                                                                 </td>
                                                                               </tr>
@@ -1330,17 +1331,17 @@ if (! class_exists('Ced_refund_and_exchange_order_meta')) {
                                                                                         <tr>
                                                                                           <td style="vertical-align:middle;text-align:center;padding-top:5px;padding-bottom:5px;padding-left:5px;padding-right:5px">
                                                                                             <a href="https://www.facebook.com/StuddsAccessoriesLtd/" style="text-decoration: none; word-break: break-word;">
-                                                                                                <img src="https://shop.studds.com/wp-content/plugins/email-template-customizer-for-woo/assets/img/fb-blue-white.png" width="32" style="border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; vertical-align: middle; background-color: transparent; max-width: 100%;" border="0" bgcolor="transparent">
+                                                                                                <img src="http://studdsonlinestore.com/wp-content/plugins/email-template-customizer-for-woo/assets/img/fb-blue-white.png" width="32" style="border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; vertical-align: middle; background-color: transparent; max-width: 100%;" border="0" bgcolor="transparent">
                                                                                             </a>
                                                                                           </td>
                                                                                           <td style="vertical-align:middle;text-align:center;padding-top:5px;padding-bottom:5px;padding-left:5px;padding-right:5px">
                                                                                             <a href="https://twitter.com/StuddsHelmet" style="text-decoration: none; word-break: break-word;">
-                                                                                                <img src="https://shop.studds.com/wp-content/plugins/email-template-customizer-for-woo/assets/img/twi-cyan-white.png" width="32" style="border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; vertical-align: middle; background-color: transparent; max-width: 100%;" border="0" bgcolor="transparent">
+                                                                                                <img src="http://studdsonlinestore.com/wp-content/plugins/email-template-customizer-for-woo/assets/img/twi-cyan-white.png" width="32" style="border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; vertical-align: middle; background-color: transparent; max-width: 100%;" border="0" bgcolor="transparent">
                                                                                             </a>
                                                                                           </td>
                                                                                           <td style="vertical-align:middle;text-align:center;padding-top:5px;padding-bottom:5px;padding-left:5px;padding-right:5px">
                                                                                             <a href="https://www.instagram.com/studdshelmets/" style="text-decoration: none; word-break: break-word;">
-                                                                                                <img src="https://shop.studds.com/wp-content/plugins/email-template-customizer-for-woo/assets/img/ins-white-color.png" width="32" style="border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; vertical-align: middle; background-color: transparent; max-width: 100%;" border="0" bgcolor="transparent">
+                                                                                                <img src="http://studdsonlinestore.com/wp-content/plugins/email-template-customizer-for-woo/assets/img/ins-white-color.png" width="32" style="border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; vertical-align: middle; background-color: transparent; max-width: 100%;" border="0" bgcolor="transparent">
                                                                                             </a>
                                                                                           </td>
                                                                                         </tr>
@@ -1352,7 +1353,7 @@ if (! class_exists('Ced_refund_and_exchange_order_meta')) {
                                                                                   <tr>
                                                                                     <td class="pad">
                                                                                       <div style="color:#fff;direction:ltr;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;font-size:14px;font-weight:400;letter-spacing:0;line-height:120%;text-align:center;mso-line-height-alt:16.8px">
-                                                                                        <p style="margin:0" style="color:white;"><a href="https://shop.studds.com/my-account/contact-us/?utm_source=Notification+Mails&utm_medium=email&utm_campaign=Order+Cancelled&utm_content=Need+Help" target="_blank" rel="noopener" style="text-decoration: none; word-break: break-word; color: #ffffff;">Need Help?</a> | customercare@studds.com | 0129-4296500</p>
+                                                                                        <p style="margin:0" style="color:white;"><a href="https://studdsonlinestore.com/my-account/contact-us/" target="_blank" rel="noopener" style="text-decoration: none; word-break: break-word; color: #ffffff;">Need Help?</a> | customercare@studds.com | 0129-4296500</p>
                                                                                       </div>
                                                                                     </td>
                                                                                   </tr>
@@ -1377,7 +1378,7 @@ if (! class_exists('Ced_refund_and_exchange_order_meta')) {
                                                                                   <tr>
                                                                                     <td class="pad">
                                                                                       <div style="color:#fff;direction:ltr;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;font-size:14px;font-weight:400;letter-spacing:0;line-height:120%;text-align:center;mso-line-height-alt:16.8px">
-                                                                                        <p style="margin:0"><a href="https://shop.studds.com/our-policies/#warranty-policy?utm_source=Notification+Mails&utm_medium=email&utm_campaign=Order+Cancelled&utm_content=Warranty+Policy" target="_blank" rel="noopener" style="text-decoration: none; word-break: break-word; color: #ffffff;">Warrenty Policy</a> | <a href="https://shop.studds.com/our-policies/#order-cancellation-policy?utm_source=Notification+Mails&utm_medium=email&utm_campaign=Order+Cancelled&utm_content=Exchange+Policy" target="_blank" rel="noopener" style="text-decoration: none; word-break: break-word; color: #ffffff;">Exchange Policy</a> | <a href="https://shop.studds.com/our-policies/#order-cancellation-policy" target="_blank" rel="noopener" style="text-decoration: none; word-break: break-word; color: #ffffff;">Cancellation Policy</a></p>
+                                                                                        <p style="margin:0"><a href="https://studdsonlinestore.com/our-policies/#warranty-policy" target="_blank" rel="noopener" style="text-decoration: none; word-break: break-word; color: #ffffff;">Warrenty Policy</a> | <a href="https://studdsonlinestore.com/our-policies/#exchange-policy" target="_blank" rel="noopener" style="text-decoration: none; word-break: break-word; color: #ffffff;">Exchange Policy</a> | <a href="https://studdsonlinestore.com/our-policies/#order-cancellation-policy" target="_blank" rel="noopener" style="text-decoration: none; word-break: break-word; color: #ffffff;">Cancellation Policy</a></p>
                                                                                       </div>
                                                                                     </td>
                                                                                   </tr>
@@ -1386,7 +1387,7 @@ if (! class_exists('Ced_refund_and_exchange_order_meta')) {
                                                                                   <tr>
                                                                                     <td class="pad">
                                                                                       <div style="color:#fff;direction:ltr;font-family:Arial,Helvetica Neue,Helvetica,sans-serif;font-size:14px;font-weight:400;letter-spacing:0;line-height:120%;text-align:center;mso-line-height-alt:16.8px">
-                                                                                        <p style="margin:0"><a href="https://shop.studds.com/shopping-shipping-delivery-policy/?utm_source=Notification+Mails&utm_medium=email&utm_campaign=Order+Cancelled&utm_content=Shopping%2C+Shipping+%26+Delivery+Policy" target="_blank" rel="noopener" style="text-decoration: none; word-break: break-word; color: #ffffff;">Shopping, Shipping & Delivery Policy</a> &nbsp;| &nbsp;<a href="https://shop.studds.com/terms-of-use/?utm_source=Notification+Mails&utm_medium=email&utm_campaign=Order+Cancelled&utm_content=Terms+Of+Use" target="_blank" rel="noopener" style="text-decoration: none; word-break: break-word; color: #ffffff;">Terms Of Use</a> | &nbsp;<a href="https://shop.studds.com/privacy-policy/?utm_source=Notification+Mails&utm_medium=email&utm_campaign=Order+Cancelled&utm_content=Privacy+Policy" target="_blank" rel="noopener" style="text-decoration: none; word-break: break-word; font-family: Roboto;color: #ffffff;"" >Privacy Policy</a></p>
+                                                                                        <p style="margin:0"><a href="https://studdsonlinestore.com/my-account/contact-us/" target="_blank" rel="noopener" style="text-decoration: none; word-break: break-word; color: #ffffff;">Shopping, Shipping & Delivery Policy</a> &nbsp;| &nbsp;<a href="https://studdsonlinestore.com/terms-of-use/" target="_blank" rel="noopener" style="text-decoration: none; word-break: break-word; color: #ffffff;">Terms Of Use</a> | &nbsp;<a href="https://studdsonlinestore.com/privacy-policy/" target="_blank" rel="noopener" style="text-decoration: none; word-break: break-word; font-family: Roboto;color: #ffffff;"" >Privacy Policy</a></p>
                                                                                       </div>
                                                                                     </td>
                                                                                   </tr>
@@ -1602,14 +1603,9 @@ if (! class_exists('Ced_refund_and_exchange_order_meta')) {
 				$exchange_warranty = array();
 				if (isset($exchange_details) && ! empty($exchange_details)) {
 					foreach ($exchange_details as $date => $exchange_detail) {
-						// echo "<pre>";
-						// print_r($exchange_details);
-						// echo "<br>";
 						if ($exchange_detail['status_pickup'] == 'reverse_pickup_approved') {
 
-							$exchanged_products = $exchange_detail['to'];
-							// 			print_r($exchanged_products);
-							//     echo "<br>";
+							$exchanged_products = $exchange_detail['from'];
 							$exchanged_from_products = $exchange_detail['from'];
 
 							$exchange_details[$date]['status'] = 'cancel';
@@ -1619,8 +1615,6 @@ if (! class_exists('Ced_refund_and_exchange_order_meta')) {
 					}
 				}
 				foreach ($exchanged_products as $keys => $kvalues) {
-					// print_r($exchanged_products);
-					// echo "<br>";
 					foreach ($selected_product as $key_exchange => $value_exchange) {
 						if ($value_exchange['approve_status'] == '3') {
 							if ($kvalues['product_id'] == $value_exchange['product_id']) {
@@ -1940,10 +1934,8 @@ if (! class_exists('Ced_refund_and_exchange_order_meta')) {
 				$tok = 0;
 				if (isset($exchanged_products) && ! empty($exchanged_products)) {
 					foreach ($exchanged_products as $exchanged_product) {
-
 						if (isset($exchanged_product['variation_id'])) {
 							$product = wc_get_product($exchanged_product['variation_id']);
-
 							$variation_product = new WC_Product_Variation($exchanged_product['variation_id']);
 							$variation_attributes = $variation_product->get_variation_attributes();
 							if (isset($exchanged_product['variations']) && ! empty($exchanged_product['variations'])) {
@@ -1957,13 +1949,11 @@ if (! class_exists('Ced_refund_and_exchange_order_meta')) {
 							$variation_att['totals']['total'] = $exchanged_product['qty'] * $variation_product_price;
 
 							$item_id = $order->add_product($variation_product, $exchanged_product['qty'], $variation_att);
-							// print_r($product->managing_stock());
-							// 							die;
+
 							if ($product->managing_stock()) {
 								$qty       = $exchanged_product['qty'];
 								$new_stock = $product->reduce_stock($qty);
 							}
-
 							$ex_to = $ex_to . $product->get_name() . '(SKU : ' . $product->get_sku() . ') x ' . $exchanged_product['qty'] . ' | ';
 						} elseif (isset($exchanged_product['id'])) {
 							$product = wc_get_product($exchanged_product['id']);
@@ -2091,7 +2081,7 @@ if (! class_exists('Ced_refund_and_exchange_order_meta')) {
 							}
 						}
 
-						$discount = $orderval;
+						$discount = $orderval - $finaldiscount;
 						$discount = $discount * 100 / (100 + $tax_rate);
 
 						$new_fee  = new WC_Order_Item_Fee();
@@ -5242,7 +5232,7 @@ if (! class_exists('Ced_refund_and_exchange_order_meta')) {
 							}
 						}
 
-						$discount = $orderval;
+						$discount = $orderval - $finaldiscount;
 						$discount = $discount * 100 / (100 + $tax_rate);
 
 						$new_fee  = new WC_Order_Item_Fee();
