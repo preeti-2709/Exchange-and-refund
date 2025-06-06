@@ -6,7 +6,7 @@
  * @since 1.0.0
  */
 
-// add_action('woocommerce_thankyou', 'custom_redirect_after_purchase');
+add_action('woocommerce_thankyou', 'custom_redirect_after_purchase');
 function custom_redirect_after_purchase($order_id) {
     $order = wc_get_order($order_id);
 

@@ -52,7 +52,7 @@ get_header();
       </div>
 
       <div class="breadcrumbs">
-          <?php boxshop_breadcrumbs_title(true, 'Gallery', 'gallery'); ?>
+          <?php boxshop_breadcrumbs_title(true, 'Gallery'); ?>
       </div>
 
   <div class="container py-5">

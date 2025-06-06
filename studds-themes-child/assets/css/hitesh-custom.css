@@ -1,0 +1,96 @@
+
+/* ====== Shop Details page Start ====== */
+
+.shop-page.single_shop {
+    width: 100% !important;
+    max-width: 100%;
+    padding: 0 !important;
+}
+.single_shop_container {
+    max-width: 1570px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+.breadcrumbs_cutom {
+    background: #F2F2F2;
+    padding: 23px 0;
+}
+.breadcrumbs_cutom a {
+    font-weight: 400;
+    color: #8D8D8D;
+}
+.breadcrumbs_cutom {
+    background: #F2F2F2;
+    padding: 23px 0;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: -0.25px;
+    text-transform: uppercase;
+    color: #010101;
+}
+.shop_details_wrapper {
+    padding-top: 50px;
+}
+.shop_details_wrapper .summary.entry-summary {
+    padding-left: 25px !important;
+}
+.shop_details_wrapper .woocommerce-product-details__short-description {
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0px;
+}
+.single_shop {
+    background: #F8F8F8;
+}
+.woocommerce .single_shop div.product .summary > .price{ 
+    padding-left: 0px !important;
+    background: transparent !important;
+    float: left;
+    display: inline-block;
+    max-width: max-content; 
+}
+.single_shop td.value.vi-wpvs-variation-style-content {
+    background: transparent !important;
+}
+.single-product .custom-rating-summary {
+    padding-top: 7px;
+    padding-left: 21px;
+}
+
+
+.vi-wpvs-variation-wrap.vi-wpvs-variation-wrap-vi_wpvs_button_design .vi-wpvs-option-wrap.vi-wpvs-option-wrap-default
+.single_shop .vi-wpvs-option-wrap.vi-wpvs-option-wrap-backorders-attribute, .vi-wpvs-variation-wrap.vi-wpvs-variation-wrap-vi_wpvs_button_design .vi-wpvs-option-wrap {
+    border: 1px solid #949494;
+    border-radius: 8px;
+    font-size: 16px !important;
+    line-height: 26px;
+    letter-spacing: 0px;
+    text-align: center;
+    box-shadow: none !important;
+    padding: 13px 23px !important;
+}
+.single_shop .vi-wpvs-variation-wrap.vi-wpvs-variation-wrap-vi_wpvs_button_design .vi-wpvs-option-wrap.vi-wpvs-option-wrap-selected, 
+.single_shop .vi-wpvs-variation-wrap.vi-wpvs-variation-wrap-vi_wpvs_button_design .vi-wpvs-option-wrap.vi-wpvs-option-wrap-hover {
+     background: #ED222833 !important;
+    border: 1px solid #ED2228;
+}
+.single_shop .vi-wpvs-variation-wrap.vi-wpvs-variation-wrap-vi_wpvs_button_design .vi-wpvs-option-wrap.vi-wpvs-option-wrap-selected span,
+.single_shop .vi-wpvs-variation-wrap.vi-wpvs-variation-wrap-vi_wpvs_button_design .vi-wpvs-option-wrap.vi-wpvs-option-wrap-hover  span{
+    color: #ED2228 !important;
+}
+.single_shop .custom-rating-summary strong {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 32px;
+    letter-spacing: 0px;
+}
+.woocommerce .single_shop .star-rating {
+    margin: 0;
+    /* width: 100px; */
+} 
+.star-rating span:before{
+        /* font-size: 18px !important; */
+        color: #F9C819 !important;
+}
+/* ====== Shop Details page End ====== */

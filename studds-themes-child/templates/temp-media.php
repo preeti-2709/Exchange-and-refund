@@ -71,10 +71,8 @@ $bg_image_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
 
 
         <?php
-        $selected_term = isset($_GET['year']) ? sanitize_text_field($_GET['year']) : '';
-        // $paged = max(1, get_query_var('paged') ? get_query_var('paged') : get_query_var('page'));
-        $paged = get_query_var('paged') ? get_query_var('paged') : 1;
-
+        $selected_term = get_query_var($taxonomy);
+        $paged = max(1, get_query_var('paged') ? get_query_var('paged') : get_query_var('page'));
 
         $args = array(
             'post_type' => 'studds-media',

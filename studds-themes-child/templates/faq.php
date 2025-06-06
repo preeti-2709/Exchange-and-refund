@@ -4,7 +4,7 @@ get_header();
 
 <?php 
     global $boxshop_theme_options;
-    boxshop_breadcrumbs_title(true, 'Frequently Asked Questions', 'FAQs'); 
+    boxshop_breadcrumbs_title(true, 'Frequently Asked Questions'); 
 ?>
 
 <?php if (have_rows('faq_tabs')): ?>
