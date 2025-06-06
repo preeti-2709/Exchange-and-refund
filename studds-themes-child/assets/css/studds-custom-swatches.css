@@ -1,0 +1,18 @@
+/* .vi-wpvs-archive-swatches .vi-wpvs-option-tooltip {
+    display: none;
+}
+span.vi-wpvs-option-color {
+    width: 16px;
+    height: 18px;
+    display: block;
+}
+.vi-wpvs-archive-swatches {
+    display: flex;
+    gap: 5px;
+}
+span.vi-wpvs-option-color:hover {
+    border: 2px solid #ec2329;
+}
+.woocommerce-shop .vi-wpvs-variation-attribute-type-image, .woocommerce-shop .vi-wpvs-variation-attribute-type-variation_img{
+    display: none !important;
+} */

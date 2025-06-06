@@ -1,0 +1,567 @@
+/*
+Theme Name: studds-themes Child
+Theme URI: http://demo.theme-sky.com/studds-themes/
+Author: Theme Sky Team
+Author URI: http://theme-sky.com/
+Description: A Premium and Responsive WordPress theme, designed for E-Commerce websites
+Template: studds-themes
+Version: 1.0.0
+License: GNU General Public License v2 or later
+License URI:  http://www.gnu.org/licenses/gpl-2.0.html
+Tags: two-columns, left-sidebar, custom-background, custom-colors, custom-header, custom-menu, editor-style, featured-images, microformats, post-formats, rtl-language-support, sticky-post, threaded-comments, translation-ready
+Text Domain: studds-themes-child
+*/
+
+/*custom css by aarti */
+.ts-social-icons li a, footer#colophon .ts-social-icons a {
+    background: white;
+}
+.ts-mailchimp-subscription-shortcode .widget .widgettitle{
+	    color: white;
+}
+.style-1 .mailchimp-subscription.text-default .newsletter{
+	color: white;
+}
+button#subcribe_ids {
+    background: black;
+    border: black;
+}
+.shopping-cart-wrapper{
+    height: 20px !important;
+}
+.header-top{
+    height: 40px !important;
+}
+
+/*a.post-title.heading-title {
+    color: white;
+}
+.excerpt {
+    color: white;
+}
+span.vcard.author {
+    color: white;
+}
+.ts-heading h3{
+    color: white !important;
+}
+#post-7249{
+    background-color: grey;
+}*/
+@media (min-width: 576px) { 
+.stripe_h3  {
+    background-image: url(https://studdsonlinestore.com/wp-content/uploads/2022/04/Mobile_Strip.jpg);
+}
+}
+@media (min-width: 250px) { 
+.stripe_h3  {
+    background-image: url(https://studdsonlinestore.com/wp-content/uploads/2022/04/Mobile_Strip.jpg);
+}
+}
+
+
+@media (min-width: 768px) { 
+.stripe_h3  {
+    background-image: url(https://studdsonlinestore.com/wp-content/uploads/2022/04/Mobile_Strip.jpg);
+}
+}
+
+
+@media (min-width: 992px) { 
+.stripe_h3  {
+    background-image: url(https://studdsonlinestore.com/wp-content/uploads/2022/04/strip-bar-right.jpg);
+    /*background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;*/
+}
+}
+
+
+@media (min-width: 1200px) { 
+.stripe_h3  {
+    background-image: url(https://studdsonlinestore.com/wp-content/uploads/2022/04/strip-bar-right.jpg);
+   /* background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;*/
+}
+}
+
+.vc_custom_1653287602157{
+     /*background-image: url(https://studdsonlinestore.com/studdslive/wp-content/uploads/2022/04/Mobile_Strip.jpg?id=9069);*/
+}
+
+
+@media only screen and (max-width: 991px){
+    .group-meta-header:before{
+        background-color: #303030;
+    }
+
+
+    }
+
+    .mailchimp-subscription button.button{
+            top: 8px;
+    }
+.woocommerce table.my_account_orders tr td:last-child, .woocommerce table.shop_table.order_details tr td:last-child {
+    padding: 12px 15px 3px 5px;
+}
+
+#post-10 {
+  margin-top: -25px;
+}
+table.shop_table.order_details.ced_rnx_product_table{
+    font-size: 13px;
+    color: #212121;
+    line-height: 1.4;
+    margin: 16px 0;
+    padding: 0;
+
+}
+
+.woocommerce table.shop_table thead th{
+    font-size: 16px;
+    line-height: 8px;
+}
+input.ced_rnx_cancel_product_all {
+    margin-right: 4px;
+}
+
+.woocommerce table.shop_table td{
+    line-height: 5px;
+}
+.ced_rnx_product_title > p {
+    margin-top: 1px;
+}
+div#ced_rnx_return_request_form_wrapper {
+    padding-top: 5px;
+
+}
+
+.shop_table .ced_rnx_prod_img{
+height: 75px;
+width: 75px;
+}
+.mwb_rma__column.left_lower_wrapper{
+    width: 50%;
+}
+
+.ced_rnx_note_tag_wrapper{
+padding: 0;
+border-radius: 2px;
+font-size: 14px;
+color: #212121;
+line-height: 1.4;
+}
+.ced-rnx_customer_detail {
+    padding: 8px !important;
+    width: 89.33%;
+}
+.woocommerce table.shop_table.order_details td {
+    padding: 20px 20px 0px 20px;
+}
+
+.ced_rnx_product_table .ced_rnx_product_title {
+    /*width: 90% !important;*/
+}
+.ced_rnx_prod_img{
+    /*margin-left: 133px;*/
+}
+.ced_rnx_prod_img_new{
+    margin-left: 133px;
+}
+#ced_rnx_return_request_container{
+    display: block !important;
+}
+
+#ced_rnx_return_request_container h2, #ced_rnx_exchange_request_container h2{
+    text-align: center;
+    font-size: 30px;
+    margin-top: 14px;
+}
+p.form-row.form-row.form-row-wide {
+    /*text-align: center;*/
+}
+input.ced_rnx_cancel_request_subject_text{
+padding: 20px 9px !important
+}
+.modal-header .new_close {
+    margin-top: -27px !important;
+    margin-right: 10px;
+}
+
+.modal.loading .modal-content:before {
+  content: 'Loading...';
+  text-align: center;
+  line-height: 155px;
+  font-size: 20px;
+  background: rgba(0, 0, 0, .8);
+  position: absolute;
+  top: 55px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: #EEE;
+  z-index: 1000;
+}
+.order_item:hover {
+    box-shadow: 0 1px 12px 2px #dbdbdb;
+}
+.woocommerce table.shop_table td {
+    /*border-color: #4a3e3e !important;*/
+}
+.ced_rnx_product_table .ced_rnx_product_title {
+    float: left;
+    /*width: unset;*/
+    line-height:1;
+}
+.cancel_policy_tab{
+    margin-left: 16px;
+    padding-top: 4px;
+    margin-right: 30px;
+}
+.ced_rnx_prod_img_view{
+height: 75px;
+width: 75px;
+}
+p.form-row.form-row.form-row-wide.return_form {
+    text-align: left;
+}
+
+td.woocommerce-table__product-name.product-name {
+    padding-left: 0px !important;
+}
+.thumbnail_views{
+    width: 30px;
+}
+.product-name-exchange{
+    width:410px;
+}
+.woocommerce a.remove{
+width: 6em;
+margin-top: -12px;
+}
+
+/*exchange css*/
+.ced_rnx_product_title dl{
+font-size: 14px !important;
+margin-bottom: 13px;
+}
+.ced_rnx_product_title ul li{
+    /*line-height: 13px !important;*/
+}
+.exchnaged_product_remove{
+    cursor: pointer;
+}
+.ced_rnx_product_table_exchange {
+  padding-right: 30px;
+  padding-left: 30px;
+}
+
+.exchange-order-items td {
+  padding: 1.5em 1em 1em;
+  text-align: left;
+  line-height: 1.5em;
+  vertical-align: top;
+}
+.exchange-order-items .exchange_img{
+width: 38px !important;
+height: 38px !important;
+border: 2px solid #e8e8e8;
+background: #f8f8f8;
+color: #ccc;
+position: relative;
+font-size: 21px;
+display: block;
+text-align: center; 
+}
+.cancel_exchange_button{
+ text-align: center;
+}
+.woocommerce div.product.type-product .cart, .pp_woocommerce div.product.type-product .cart, #pp_full_res div.product.type-product .cart{
+    width: 100%;
+}
+#ribbon{
+  background:#fa6f57;
+  height: 30px;
+  width:auto;
+  display: inline-block;
+  margin:150px auto;
+  position: relative;
+  color:#FFF;
+  line-height: 30px;
+  padding:0px 20px;
+}
+
+/*Warranty Activation Page CSS*/
+
+.page-template-warranty-activation-php .warranty_dls_wrap {
+    border: 2px solid #00BA00;
+    border-radius: 8px;
+    padding: 24px;
+}
+
+.page-template-warranty-activation-php .warranty_dls_wrap.expired_warranty_sec {
+    border-color: #ED1C24;
+}
+
+.page-template-warranty-activation-php .warranty_dls_title{
+    font-weight: 500;
+    font-size: 18px;
+    line-height: normal;
+    color: #00BA00;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.page-template-warranty-activation-php .expired_warranty_sec .warranty_dls_title {
+    color: #ED1C24;
+}
+
+.page-template-warranty-activation-php .activatation_dates p,
+.page-template-warranty-activation-php .expiry_date p{
+    display: flex;
+    justify-content: space-between;
+    max-width: 300px;
+    margin-bottom: 10px;
+    padding-left: 33px;
+    line-height: normal;
+    font-size: 16px;
+}
+
+.page-template-warranty-activation-php .expiry_date p {
+     margin-bottom: 0px;
+}
+
+.page-template-warranty-activation-php .warranty_dls_wrap > p {
+    font-size: 16px;
+    margin-bottom: 10px;
+    padding-left: 33px;
+    line-height: normal;
+
+}
+
+.page-template-warranty-activation-php .warranty_dls_wrap .activatation_dates p,
+.page-template-warranty-activation-php .warranty_dls_wrap .expiry_date p {
+    display: flex;
+    align-items: center;
+    max-width: 350px;
+    justify-content: space-between;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.page-template-warranty-activation-php .warranty_dls_wrap .activatation_dates p span,
+.page-template-warranty-activation-php .warranty_dls_wrap .expiry_date p span {
+    font-weight: 500;
+}
+
+.default-content__container.warranty_dls_contain {
+    background: #f6f6f6;
+    padding: 4.5625rem;
+    margin: 4.5625rem;
+}
+
+.gform-theme.gform-theme--framework.gform_wrapper input:is([type=submit],[type=button],[type=reset]).button:where(:not(.gform-theme-no-framework):not(.gform-theme__disable):not(.gform-theme__disable *):not(.gform-theme__disable-framework):not(.gform-theme__disable-framework *)), .gform-theme.gform-theme--framework.gform_wrapper input:is([type=submit],[type=button],[type=reset]):where(:not(.gform-theme-no-framework):not(.gform-theme__disable):not(.gform-theme__disable *):not(.gform-theme__disable-framework):not(.gform-theme__disable-framework *)), .gform-theme.gform-theme--framework.gform_wrapper input[type=submit].button.gform_button:where(:not(.gform-theme-no-framework):not(.gform-theme__disable):not(.gform-theme__disable *):not(.gform-theme__disable-framework):not(.gform-theme__disable-framework *)){
+    font-size: 15px !important;
+    padding: 3px 17px !important;
+    background-image: linear-gradient(to right, black, #ce2c30) !important;
+    clip-path: polygon(0% 0%, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0% 100%);
+    border-right: none;
+}
+
+.page-template-warranty-activation .gform_fields {
+    row-gap: 14px;
+}
+
+.warranty_dls_sec {
+    display: flex;
+    gap: 34px;
+}
+
+.warranty_dls_sec .warranty_dls_box {
+    width: 50%;
+    margin-bottom: 16px;
+}
+
+.warranty_dls_sec .warranty_dls_box input {
+    width: 100%;
+    max-width: 100%;
+}
+
+.warranty_dls_box input {
+    width: 100%;
+    max-width: 100%;
+}
+
+.activate_wrn_btns button {
+    font-size: 16px;
+    padding: 10px 40px;
+    background-image: linear-gradient(to right, black, #ce2c30) !important;
+    clip-path: polygon(0% 0%, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0% 100%);
+    border: none;
+    line-height: 28px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.activate_wrn_btns button span {
+    animation: blinker 1s step-start infinite;
+    font-weight: 800;
+    letter-spacing: 2.3px;
+}
+
+.warranty_dls_box input[type="file"] {
+    background: #fff;
+    color: #0a0a0a;
+    border-color: #e5e5e5;
+}
+
+.activate_wrn_btns {
+    display: flex;
+    align-items: center;
+}
+.activate_wrn_btns:hover{
+    text-decoration: underline;
+    text-decoration-color: #ffffff;
+    text-decoration-thickness: 1px;
+}
+.loading_img_gif img {
+    width: 80px;
+}
+
+.d-none{
+    display : none;
+}
+
+.red_load_helmet {
+    position: absolute;
+    top: 35%;
+    width: 100%;
+    height: 100%;
+    transform: translateX(50%);
+}
+
+.red_load_helmet img {
+    width: 90px;
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 10px;
+}
+
+.page-template-warranty-activation #main {
+    position: relative;
+}
+
+.disable-button{
+    cursor : no-drop;
+}
+
+.cross-sell-slider .owl-nav {
+    top: -70px;
+    right: 20px!important;
+    line-height: 0;
+    position: absolute;
+    right: 0;
+}
+.woocommerce .cross-sells {
+  display: none!important;
+}
+.add-to-cart-cross{
+    background: #000000!important;
+    padding-left: 40px!important;
+    padding-top: 15px!important;
+    padding-bottom: 15px!important;
+    padding-right: 40px!important;
+    border: 2px solid #000000!important;
+}
+.product-name-cross-sell{
+letter-spacing: normal;
+    padding-top: 20px !important;
+    font-size: 14px;
+    text-transform: uppercase;
+    height: 45px;
+    text-align: center;
+    align-content: center;
+    line-height: 16px;
+} 
+.product-wrapper-cross{
+    padding: 13px;
+    background: #f1f1f1;
+    text-align: center;
+}
+.cross-sell-slider .owl-nav {
+    display: none;
+}
+.cross_sell_product{
+    font-weight: 500;
+    line-height: 4px;
+    font-size: 14px;
+    color: #fff;
+    background: #000;
+    padding: 9px 25px 9px 25px;
+    width: 100% !important;
+ 
+}
+
+
+@media only screen and (max-width: 767px) {
+
+    .page-template-warranty-activation-php .warranty_dls_wrap p,
+    .page-template-warranty-activation-php .warranty_dls_wrap .activatation_dates p,
+    .page-template-warranty-activation-php .warranty_dls_wrap .expiry_date p {
+        font-size: 14px;
+        line-height: 20px
+    }
+    
+    .default-content__container.warranty_dls_contain {
+            padding: 2rem;
+            margin: 2rem;
+    }
+    
+    .red_load_helmet {
+        transform: translateX(40%);
+    }
+
+}
+
+@media only screen and (max-width: 576px) {
+    
+    .page-template-warranty-activation-php .warranty_dls_wrap {
+        padding: 16px;
+    }
+    
+    .page-template-warranty-activation-php .warranty_dls_title {
+        font-size: 16px;
+    }
+    
+    .page-template-warranty-activation-php .warranty_dls_wrap > p {
+        padding-left: 0;
+        font-size: 14px;
+
+    }
+    
+    .page-template-warranty-activation-php .activatation_dates p, 
+    .page-template-warranty-activation-php .expiry_date p {
+        padding-left: 0;
+        font-size: 14px;
+    }
+    
+    .page-template-warranty-activation-php .warranty_dls_title img {
+        max-width: 18px;
+    }
+    
+    .warranty_dls_sec {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .warranty_dls_sec .warranty_dls_box {
+        width: 100%;
+    }
+    
+}
+
+
