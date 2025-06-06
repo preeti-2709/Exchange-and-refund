@@ -28,7 +28,7 @@
                     if (!empty($file)) :
                         $file_type = wp_check_filetype($file);
                         $file_ext = $file_type['ext']; ?>
-                        <div class="swiper-slide">
+                        <div class="swiper-slide" <?php if(in_array($file_ext, ['mp4', 'webm', 'ogg'])): ?> data-swiper-autoplay="30000" <?php endif; ?>>
                             <?php if (in_array($file_ext, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) : ?>
                                 <img src="<?php echo esc_url($file); ?>" alt="Slide Image" loading="lazy">
                             <?php elseif (in_array($file_ext, ['mp4', 'webm', 'ogg'])) : ?>

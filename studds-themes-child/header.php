@@ -239,7 +239,27 @@
                                     <div class="ts-menu">
                                         <?php
                                         if (has_nav_menu('primary')) {
-                                            wp_nav_menu(array('container' => 'nav', 'container_class' => 'main-menu pc-menu ts-mega-menu-wrapper', 'theme_location' => 'primary', 'walker' => new My_Custom_Walker_Nav_Menu()));
+                                          if (class_exists('My_Custom_Walker_Nav_Menu')) {
+                                                wp_nav_menu(array(
+                                                    'container'       => 'nav',
+                                                    'container_class' => 'main-menu pc-menu ts-mega-menu-wrapper',
+                                                    'theme_location'  => 'primary',
+                                                    'walker'          => new My_Custom_Walker_Nav_Menu(),
+                                                ));
+                                            } elseif (class_exists('Boxshop_Walker_Nav_Menu')) {
+                                                wp_nav_menu(array(
+                                                    'container'       => 'nav',
+                                                    'container_class' => 'main-menu pc-menu ts-mega-menu-wrapper',
+                                                    'theme_location'  => 'primary',
+                                                    'walker'          => new Boxshop_Walker_Nav_Menu(),
+                                                ));
+                                            } else {
+                                                wp_nav_menu(array(
+                                                    'container'       => 'nav',
+                                                    'container_class' => 'main-menu pc-menu ts-mega-menu-wrapper',
+                                                    'theme_location'  => 'primary',
+                                                ));
+                                            }
                                         } else {
                                             wp_nav_menu(array('container' => 'nav', 'container_class' => 'main-menu pc-menu ts-mega-menu-wrapper'));
                                         }
