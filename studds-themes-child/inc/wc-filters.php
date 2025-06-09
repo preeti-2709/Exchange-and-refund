@@ -19,6 +19,9 @@ add_filter('rewrite_rules_array', 'custom_blog_post_rewrite_rules');
 // Email Masking 
 add_filter('user_email', 'mask_email_address');
 
+// Customize the search form placeholder text in WordPress.
+add_filter('get_search_form', 'boxshop_custom_search_placeholder');
+
 /* WC Filter hooks end*/ 
 
 /**
@@ -119,3 +122,17 @@ function mask_email_address($email)
     return $masked_user . '@' . $domain;
 }
 
+/**
+ * Customize the search form placeholder text in WordPress.
+ *
+ * This filter modifies the default placeholder text in the WordPress search form
+ * and replaces it with a custom message: "Search blog posts...".
+ *
+ * @param string $form The HTML output of the search form.
+ * @return string Modified search form HTML with custom placeholder text.
+ */
+function boxshop_custom_search_placeholder($form)
+{
+    $form = str_replace('placeholder="Search …"', 'placeholder="Search blog posts..."', $form);
+    return $form;
+}

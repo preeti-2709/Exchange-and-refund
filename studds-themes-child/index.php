@@ -10,21 +10,11 @@ $show_page_title = ( !is_home() && !is_front_page() && absint($boxshop_page_data
 $featured_img_url = get_the_post_thumbnail_url(get_queried_object_id(), 'full'); 
 
 ?>
-
-
-<?php if (!empty($featured_img_url)): ?>
-	<div class="hero_banner_slider" style="background-image: url('<?php echo esc_url($featured_img_url); ?>');">
-		<div class="hero_banner_content">
-			<?php if (!empty(get_the_title(get_queried_object_id()))): ?>
-				<h2 class="hero_title"><?php echo get_the_title(get_queried_object_id()); ?></h2>
-			<?php endif; ?>
-			<div>
-				<?php custom_breadcrumbs(); ?>
-			</div>
-		</div>
-	</div>
-<?php endif; ?>
-
+<div class="category-banner blog_section" style="background: url('<?php echo esc_url($featured_img_url); ?>') ;">
+    <div class="category-overlay">
+        <h1 class="container category-title"><?php echo get_the_title(get_queried_object_id()); ?></h1>
+    </div>
+</div>
 <?php
 	// if( ($show_breadcrumb || $show_page_title) && isset($boxshop_theme_options['ts_breadcrumb_layout']) ){
 	// 	$extra_class = 'show_breadcrumb_'.$boxshop_theme_options['ts_breadcrumb_layout'];
@@ -32,7 +22,7 @@ $featured_img_url = get_the_post_thumbnail_url(get_queried_object_id(), 'full');
 	// boxshop_breadcrumbs_title($show_breadcrumb, woocommerce_page_title(false));
 ?>
 <div class="container bloglisting_header">
-	<?php //custom_breadcrumbs(); ?>
+	<?php custom_breadcrumbs(); ?>
 	<form method="get" action="<?php echo esc_url( home_url( '/blog/' ) ); ?>" id="blog-search-form">
 		<div class="search-table">
 			<div class="search-field search-content">

@@ -1,17 +1,14 @@
 <?php
 /**
- * Custom Excerpt by Character Limit for Boxshop Theme
+ * Outputs or returns a character-limited excerpt for the Boxshop theme.
  *
- * This function outputs or returns an excerpt limited by character count (instead of the default word count).
- * It's useful when you want more precise control over excerpt length for post previews or listings.
+ * @param int     $char_limit  Max characters. Default 150.
+ * @param object  $post_obj    WP_Post object. Defaults to global $post.
+ * @param bool    $strip_tags  Strip HTML tags. Default true.
+ * @param string  $more_text   Text after cut. Default '...'.
+ * @param bool    $echo        Echo or return. Default true (echo).
  *
- * @param int     $char_limit  Number of characters to limit the excerpt to. Default is 150.
- * @param object  $post_obj    Optional. WP_Post object. Defaults to current global post.
- * @param bool    $strip_tags  Whether to strip HTML tags from the excerpt. Default true.
- * @param string  $more_text   String to append after truncation (e.g., "..."). Default '...'.
- * @param bool    $echo        Whether to echo or return the result. Default true (echo).
- *
- * @return string|null         Returns excerpt if $echo is false, otherwise echoes the output.
+ * @return string|null
  */
 
 function boxshop_the_excerpt_max_chars($char_limit = 150, $post_obj = null, $strip_tags = true, $more_text = '...', $echo = true)
@@ -96,8 +93,6 @@ if (!function_exists('boxshop_custom_pagination')) {
     }
 }
 
-
-
 /**
  * Displays breadcrumbs except on the homepage.
  *
@@ -114,6 +109,10 @@ function custom_breadcrumbs() {
 
     if (is_home()) {
         echo 'Blog';
+    } elseif (is_singular('product')) {
+        // WooCommerce product page
+        echo '<a href="' . get_permalink(wc_get_page_id('shop')) . '">Shop</a> &rsaquo; ';
+        the_title();
     } elseif (is_single()) {
         if (get_post_type() === 'post') {
             echo '<a href="' . get_permalink(get_option('page_for_posts')) . '">Blog</a> &rsaquo; ';

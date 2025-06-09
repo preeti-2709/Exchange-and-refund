@@ -24,7 +24,8 @@ add_action('widgets_init', 'register_search_filters_widget');
 // Enqueue color picker in admin
 add_action('admin_enqueue_scripts', 'enqueue_color_picker');
 
-
+// Modify the main query on the front end based on custom GET parameters.
+add_action('pre_get_posts', 'boxshop_modify_main_query_for_custom_search');
 
 /* WC Action hooks end*/
 
@@ -213,4 +214,31 @@ function render_base_color_settings_page()
     echo '<p><input type="submit" class="button-primary" value="' . __('Save Changes', 'text-domain') . '"></p>';
     echo '</form>';
     echo '</div>';
+}
+
+
+/**
+ * Modify the main query on the front end based on custom GET parameters.
+ *
+ * This function hooks into 'pre_get_posts' to:
+ * - Enable search if a 'search' query parameter is present.
+ * - Limit the search to the 'post' post type if 'post_type=post' is set.
+ *
+ * @param WP_Query $query The current WP_Query instance (passed by reference).
+ */
+function boxshop_modify_main_query_for_custom_search($query)
+{
+    if (!is_admin() && $query->is_main_query()) {
+
+        // Check if a custom 'search' parameter is passed in the URL
+        if (isset($_GET['search'])) {
+            $query->is_search = true;
+            $query->set('s', sanitize_text_field($_GET['search']));
+        }
+
+        // Force post_type to 'post' if specified
+        if (isset($_GET['post_type']) && $_GET['post_type'] === 'post') {
+            $query->set('post_type', 'post');
+        }
+    }
 }
