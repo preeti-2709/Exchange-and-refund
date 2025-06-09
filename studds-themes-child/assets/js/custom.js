@@ -1,15 +1,18 @@
 jQuery(document).ready(function ($) {
-  /*
-  ** Home Page - Our Story Section
-  */ 
+
   document
     .querySelectorAll(".thunder-product-slider.our-stories-slider")
     .forEach(function (section) {
       const swiperThumbs = new Swiper(section.querySelector(".main_custom_slider"), {
         spaceBetween: 0,
+        // freeMode: true,
+        // effect: "fade",
+        // fadeEffect: {
+        //   crossFade: true,
+        // },
         watchSlidesProgress: true,
-        watchSlidesVisibility: true,
-        centeredSlides: false,       
+        watchSlidesVisibility: true, // Ensures visibility awareness
+        centeredSlides: false,       // Keep as false unless you want centered behavior
         slideToClickedSlide: true, 
         speed: 700,
         loop: true,
@@ -51,5 +54,10 @@ jQuery(document).ready(function ($) {
         }
       });
     });
+
+
+    // tablate filter button hide and show:-
+
+    
 
 });
