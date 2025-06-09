@@ -33,14 +33,28 @@ class Search_By_Base_Color_Widget extends WP_Widget
 
     public function widget($args, $instance)
     {
+
+        echo '<div class="filters-vertical tablate_hide">'; // Add your tab system wrapper here
         echo $args['before_widget'];
         echo $args['before_title'] . __('Color', 'text-domain') . $args['after_title'];
-
         // Display base-color attribute values as checkboxes
         $this->display_base_color_checkboxes();
+        echo $args['after_widget'];
+        echo '</div>';
+
+        // Mobile/Tab version (hidden by default, for tabs)
+        echo '<div class="tabbed-mobile-widget tablate_show color-filter-tab">'; // Add your tab system wrapper here
+        echo '<div class="tab-title-item" data-tab-id="color-filter">';
+        echo __('Color', 'text-domain');
+        echo '</div>';
+
+        // Output tab content
+        echo '<div class="tab-content-item" id="color-filter">';
+        $this->display_base_color_checkboxes(true); // Mobile/tab version
+        echo '</div>';
+        echo '</div>';
 
         echo '<div id="ajax-base-color-results"></div>';
-        echo $args['after_widget'];
     }
 
     private function display_base_color_checkboxes()
@@ -112,17 +126,46 @@ class Search_By_Size_Widget extends WP_Widget
         );
     }
 
+    // public function widget($args, $instance)
+    // {
+    //     echo $args['before_widget'];
+    //     echo $args['before_title'] . __('Size', 'text-domain') . $args['after_title'];
+
+    //     // Display size attribute values as checkboxes
+    //     $this->display_size_checkboxes();
+
+    //     echo '<div id="ajax-size-results"></div>';
+    //     echo $args['after_widget'];
+    // }
+
     public function widget($args, $instance)
     {
+        // Desktop/Hidden vertical version
+        echo '<div class="filters-vertical tablate_hide">';
         echo $args['before_widget'];
         echo $args['before_title'] . __('Size', 'text-domain') . $args['after_title'];
-
-        // Display size attribute values as checkboxes
         $this->display_size_checkboxes();
+        echo $args['after_widget'];
+        echo '</div>';
+
+        // Mobile/Tab version
+        echo '<div class="tabbed-mobile-widget tablate_show">';
+
+        // Tab title list item
+        echo '<div class="tab-title-item" data-tab-id="tab-size">';
+        echo __('Size', 'text-domain');
+        echo '</div>';
+
+        // Tab content container
+        echo '<div id="tab-size" class="tab-content-item">';
+        $this->display_size_checkboxes(true); // Pass true for mobile behavior if needed
+        echo '</div>';
+
+        echo '</div>';
 
         echo '<div id="ajax-size-results"></div>';
-        echo $args['after_widget'];
     }
+
 
     private function display_size_checkboxes()
     {
@@ -189,16 +232,45 @@ class Search_By_Category_Widget extends WP_Widget
         );
     }
 
+    // public function widget($args, $instance)
+    // {
+    //     echo $args['before_widget'];
+    //     echo $args['before_title'] . __('Category', 'text-domain') . $args['after_title'];
+
+    //     // Display product categories as checkboxes
+    //     $this->display_category_checkboxes();
+
+    //     echo '<div id="ajax-category-results"></div>';
+    //     echo $args['after_widget'];
+    // }
+
+
     public function widget($args, $instance)
     {
+        // Desktop/hidden version
+        echo '<div class="filters-vertical tablate_hide">';
         echo $args['before_widget'];
         echo $args['before_title'] . __('Category', 'text-domain') . $args['after_title'];
-
-        // Display product categories as checkboxes
         $this->display_category_checkboxes();
+        echo $args['after_widget'];
+        echo '</div>';
+
+        // Mobile/Tab version
+        echo '<div class="tabbed-mobile-widget tablate_show">';
+
+        // Tab title
+        echo '<div class="tab-title-item" data-tab-id="tab-category">';
+        echo __('Category', 'text-domain');
+        echo '</div>';
+
+        // Tab content
+        echo '<div id="tab-category" class="tab-content-item">';
+        $this->display_category_checkboxes(true); // Pass true for mobile context if needed
+        echo '</div>';
+
+        echo '</div>';
 
         echo '<div id="ajax-category-results"></div>';
-        echo $args['after_widget'];
     }
 
     private function display_category_checkboxes()
@@ -272,17 +344,46 @@ class Search_By_Finish_Widget extends WP_Widget
         );
     }
 
+    // public function widget($args, $instance)
+    // {
+    //     echo $args['before_widget'];
+    //     echo $args['before_title'] . __('Finish', 'text-domain') . $args['after_title'];
+
+    //     // Display finish attribute values as checkboxes
+    //     $this->display_finish_checkboxes();
+
+    //     echo '<div id="ajax-finish-results"></div>';
+    //     echo $args['after_widget'];
+    // }
+
     public function widget($args, $instance)
     {
+        // Desktop version (hidden by default)
+        echo '<div class="filters-vertical tablate_hide">';
         echo $args['before_widget'];
         echo $args['before_title'] . __('Finish', 'text-domain') . $args['after_title'];
-
-        // Display finish attribute values as checkboxes
         $this->display_finish_checkboxes();
+        echo $args['after_widget'];
+        echo '</div>';
+
+        // Mobile/tabbed version
+        echo '<div class="tabbed-mobile-widget tablate_show">';
+
+        // Tab title
+        echo '<div class="tab-title-item" data-tab-id="tab-finish">';
+        echo __('Finish', 'text-domain');
+        echo '</div>';
+
+        // Tab content
+        echo '<div id="tab-finish" class="tab-content-item">';
+        $this->display_finish_checkboxes(true); // Pass true for tab/mobile version if needed
+        echo '</div>';
+
+        echo '</div>';
 
         echo '<div id="ajax-finish-results"></div>';
-        echo $args['after_widget'];
     }
+
 
     private function display_finish_checkboxes()
     {
@@ -349,17 +450,47 @@ class Search_By_Model_Widget extends WP_Widget
         );
     }
 
+    // public function widget($args, $instance)
+    // {
+    //     echo $args['before_widget'];
+    //     echo $args['before_title'] . __('Model', 'text-domain') . $args['after_title'];
+
+    //     // Display model attribute values as checkboxes
+    //     $this->display_model_checkboxes();
+
+    //     echo '<div id="ajax-model-results"></div>';
+    //     echo $args['after_widget'];
+    // }
+
+
     public function widget($args, $instance)
     {
+        // Desktop version (hidden by default)
+        echo '<div class="filters-vertical tablate_hide">';
         echo $args['before_widget'];
         echo $args['before_title'] . __('Model', 'text-domain') . $args['after_title'];
-
-        // Display model attribute values as checkboxes
         $this->display_model_checkboxes();
+        echo $args['after_widget'];
+        echo '</div>';
+
+        // Mobile/Tab version (left-tab, right-content)
+        echo '<div class="tabbed-mobile-widget tablate_show">';
+
+        // Tab title (left column item)
+        echo '<div class="tab-title-item" data-tab-id="tab-model">';
+        echo __('Model', 'text-domain');
+        echo '</div>';
+
+        // Tab content (right column item)
+        echo '<div id="tab-model" class="tab-content-item">';
+        $this->display_model_checkboxes(true); // true if you want to distinguish mobile version
+        echo '</div>';
+
+        echo '</div>';
 
         echo '<div id="ajax-model-results"></div>';
-        echo $args['after_widget'];
     }
+
 
     private function display_model_checkboxes()
     {
@@ -436,18 +567,48 @@ class Filter_By_Rating_Widget extends WP_Widget
      * @param array $args Display arguments including before and after widget markup.
      * @param array $instance The settings for the particular instance of the widget.
      */
+    // public function widget($args, $instance)
+    // {
+    //     echo $args['before_widget']; // Output before widget markup
+    //     echo $args['before_title'] . __('Rating', 'text-domain') . $args['after_title']; // Widget title
+
+    //     // Display rating filter checkboxes
+    //     $this->display_rating_checkboxes();
+
+    //     // Placeholder for AJAX results
+    //     echo '<div id="ajax-rating-results"></div>';
+
+    //     echo $args['after_widget']; // Output after widget markup
+    // }
+
+
     public function widget($args, $instance)
     {
-        echo $args['before_widget']; // Output before widget markup
-        echo $args['before_title'] . __('Rating', 'text-domain') . $args['after_title']; // Widget title
-
-        // Display rating filter checkboxes
+        // Desktop version (hidden by default)
+        echo '<div class="filters-vertical tablate_hide">';
+        echo $args['before_widget'];
+        echo $args['before_title'] . __('Rating', 'text-domain') . $args['after_title'];
         $this->display_rating_checkboxes();
+        echo $args['after_widget'];
+        echo '</div>';
+
+        // Mobile/Tab version (left-tab, right-content)
+        echo '<div class="tabbed-mobile-widget tablate_show">';
+
+        // Tab title (left column item)
+        echo '<div class="tab-title-item" data-tab-id="tab-rating">';
+        echo __('Rating', 'text-domain');
+        echo '</div>';
+
+        // Tab content (right column item)
+        echo '<div id="tab-rating" class="tab-content-item">';
+        $this->display_rating_checkboxes(true); // true to distinguish tabbed version
+        echo '</div>';
+
+        echo '</div>';
 
         // Placeholder for AJAX results
         echo '<div id="ajax-rating-results"></div>';
-
-        echo $args['after_widget']; // Output after widget markup
     }
 
     /**

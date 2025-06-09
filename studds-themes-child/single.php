@@ -11,7 +11,7 @@ $extra_class = "";
 
 $page_column_class = boxshop_page_layout_columns_class($boxshop_theme_options['ts_blog_details_layout']);
 
-boxshop_breadcrumbs_title(true, $boxshop_theme_options['ts_blog_details_title'], get_the_title());
+// boxshop_breadcrumbs_title(true, $boxshop_theme_options['ts_blog_details_title'], get_the_title());
 if(isset($boxshop_theme_options['ts_breadcrumb_layout']) ){
 	$extra_class = 'show_breadcrumb_'.$boxshop_theme_options['ts_breadcrumb_layout'];
 }
@@ -48,9 +48,11 @@ $page_title = get_the_title();
 	
 	<!-- main-content -->
 	<div id="main-content" class="left_blog_dls <?php echo esc_attr($page_column_class['main_class']); ?>">
-		<!-- Breadcrumbs -->
-			<?php custom_breadcrumbs();?>
-		<!-- Breadcrumbs -->
+
+	<!-- Breadcrumbs -->
+	 <?php custom_breadcrumbs();?>
+	<!-- Breadcrumbs -->
+
 		<article class="single single-post blog-detail-page">
 			<!-- Blog Thumbnail -->
 			<?php if( $show_blog_thumbnail ): ?>

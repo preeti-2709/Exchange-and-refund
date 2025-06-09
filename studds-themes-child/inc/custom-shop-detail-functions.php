@@ -9,6 +9,9 @@ if ( function_exists( 'shiprocket_show_check_pincode' ) ) {
     add_action( 'woocommerce_after_add_to_cart_form', 'shiprocket_show_check_pincode', 31 );
 }
 
+remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_output_product_data_tabs', 10 );
+
+
 add_action('woocommerce_before_single_product', 'inject_variation_image_map_for_color');
 function inject_variation_image_map_for_color() {
     global $product;
@@ -73,3 +76,59 @@ function replace_color_swatch_with_images_script() { ?>
 
 <?php }
 
+
+
+add_action('wp_footer', 'add_color_swatch_toggle_script_and_style');
+function add_color_swatch_toggle_script_and_style() {
+    if (!is_product()) {
+        return; // Only load this on single product pages
+    }
+    ?>
+    <style>
+        .swatch-toggle-btn {
+            margin-top: 10px;
+            padding: 6px 12px;
+            background-color: #0073aa;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            opacity: 0.99;
+
+        }
+        .swatch-toggle-btn:hover {
+            background-color: #005177;
+        }
+    </style>
+    <script>
+    jQuery(document).ready(function($) {
+        var $parent = $('.vi-wpvs-variation-wrap[data-attribute="attribute_pa_color"]');
+        console.log($parent);
+        if ($parent.length === 0) {
+            console.warn('No color swatch variation found');
+            return;
+        }
+        var $children = $parent.find('.vi-wpvs-option-wrap');
+        var visibleCount = 5;
+        var expanded = false;
+        $children.hide().slice(0, visibleCount).show();
+        if ($children.length > visibleCount) {
+            var $button = $('<button id="toggle-button" class="swatch-toggle-btn">View More</button>');
+            $parent.after($button);
+
+            $button.on('click', function() {
+                if (!expanded) {
+                    $children.show();
+                    $button.text('View Less');
+                } else {
+                    $children.slice(visibleCount).hide();
+                    $button.text('View More');
+                }
+                expanded = !expanded;
+            });
+        }
+    });
+    </script>
+    <?php
+}
